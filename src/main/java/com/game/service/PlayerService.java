@@ -2,7 +2,6 @@ package com.game.service;
 
 import com.game.dto.PlayerDto;
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Сервис для работы с игроками
@@ -32,7 +31,7 @@ public interface PlayerService {
   /**
    * Редактирование игрока
    *
-   * @param id Идентификатор игрока
+   * @param id        Идентификатор игрока
    * @param playerDto Игрок
    */
   PlayerDto updatePlayer(String id, PlayerDto playerDto);

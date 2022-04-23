@@ -1,7 +1,4 @@
 package com.game.mapper;
-import com.game.entity.Race;
-import com.game.entity.Profession;
-import java.util.Date;
 
 import com.game.dto.PlayerDto;
 import com.game.entity.Player;

@@ -20,7 +20,8 @@ public class PlayerServiceImpl implements PlayerService {
 
   @Override
   public List<PlayerDto> getPlayers() {
-    return playerRepository.findAll(PageRequest.of(0, 10)).get().map(PlayerMapper::playerToDto).collect(Collectors.toList());
+    return playerRepository.findAll(PageRequest.of(0, 10)).get().map(PlayerMapper::playerToDto)
+        .collect(Collectors.toList());
   }
 
   @Override

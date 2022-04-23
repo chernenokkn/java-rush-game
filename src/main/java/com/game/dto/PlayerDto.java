@@ -3,9 +3,6 @@ package com.game.dto;
 import com.game.entity.Profession;
 import com.game.entity.Race;
 import java.util.Date;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 public class PlayerDto {
 

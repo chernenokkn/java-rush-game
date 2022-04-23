@@ -59,7 +59,7 @@ public class PlayerController {
   /**
    * Редактирование игрока
    *
-   * @param id Идентификатор игрока
+   * @param id        Идентификатор игрока
    * @param playerDto Игрок
    */
   @PostMapping(path = "{id}")
