@@ -1,7 +1,10 @@
 package com.game.service;
 
 import com.game.dto.PlayerDto;
+import com.game.entity.Player;
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  * Сервис для работы с игроками
@@ -11,8 +14,11 @@ public interface PlayerService {
 
   /**
    * Получение списка игроков
+   *
+   * @param specification Поиск
+   * @param page          Страницы
    */
-  List<PlayerDto> getPlayers();
+  List<PlayerDto> getPlayers(Specification<Player> specification, PageRequest page);
 
   /**
    * Получение игрока
@@ -45,6 +51,8 @@ public interface PlayerService {
 
   /**
    * Получение количество игроков
+   *
+   * @param specification Поиск
    */
-  Integer getPlayersCount();
+  Integer getPlayersCount(Specification<Player> specification);
 }

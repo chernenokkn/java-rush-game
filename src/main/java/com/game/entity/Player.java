@@ -2,6 +2,8 @@ package com.game.entity;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,11 +36,13 @@ public class Player {
   /**
    * Расса персонажа
    */
+  @Enumerated(EnumType.STRING)
   private Race race;
 
   /**
    * Профессия персонажа
    */
+  @Enumerated(EnumType.STRING)
   private Profession profession;
 
   /**

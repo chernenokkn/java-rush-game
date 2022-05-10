@@ -3,8 +3,14 @@ package com.game.controller;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.game.dto.PlayerDto;
+import com.game.entity.Player;
+import com.game.entity.Profession;
+import com.game.entity.Race;
 import com.game.service.PlayerService;
+import com.game.util.PlayerSpecification;
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,8 +39,33 @@ public class PlayerController {
    * Получение списка игроков
    */
   @GetMapping()
-  public List<PlayerDto> getPlayers() {
-    return playerService.getPlayers();
+  public List<PlayerDto> getPlayers(
+      @RequestParam(required = false) String name,
+      @RequestParam(required = false) String title,
+      @RequestParam(required = false) Race race,
+      @RequestParam(required = false) Profession profession,
+      @RequestParam(required = false) Long after,
+      @RequestParam(required = false) Long before,
+      @RequestParam(required = false) Boolean banned,
+      @RequestParam(required = false) Double minExperience,
+      @RequestParam(required = false) Double maxExperience,
+      @RequestParam(required = false) Double maxLevel,
+      @RequestParam(required = false) Double minLevel,
+      @RequestParam(required = false) PlayerOrder order,
+      @RequestParam(defaultValue = "0") int pageNumber,
+      @RequestParam(defaultValue = "3") int pageSize) {
+
+    Specification<Player> spec = Specification.where(PlayerSpecification.nameFilter(name))
+        .and(PlayerSpecification.titleFilter(title))
+        .and(PlayerSpecification.bannedFilter(banned))
+        .and(PlayerSpecification.levelFilter(minLevel, maxLevel))
+        .and(PlayerSpecification.dateFilter(after, before))
+        .and(PlayerSpecification.professionFilter(profession))
+        .and(PlayerSpecification.raceFilter(race))
+        .and(PlayerSpecification.experienceFilter(minExperience, maxExperience))
+        .and(PlayerSpecification.order(order));
+
+    return playerService.getPlayers(spec, PageRequest.of(pageNumber, pageSize));
   }
 
   /**
@@ -81,7 +113,28 @@ public class PlayerController {
    * Получение количество игроков
    */
   @GetMapping(path = "count")
-  public Integer getPlayersCount() {
-    return playerService.getPlayersCount();
+  public Integer getPlayersCount(
+      @RequestParam(required = false) String name,
+      @RequestParam(required = false) String title,
+      @RequestParam(required = false) Race race,
+      @RequestParam(required = false) Profession profession,
+      @RequestParam(required = false) Long after,
+      @RequestParam(required = false) Long before,
+      @RequestParam(required = false) Boolean banned,
+      @RequestParam(required = false) Double minExperience,
+      @RequestParam(required = false) Double maxExperience,
+      @RequestParam(required = false) Double maxLevel,
+      @RequestParam(required = false) Double minLevel) {
+
+    Specification<Player> spec = Specification.where(PlayerSpecification.nameFilter(name))
+        .and(PlayerSpecification.titleFilter(title))
+        .and(PlayerSpecification.bannedFilter(banned))
+        .and(PlayerSpecification.levelFilter(minLevel, maxLevel))
+        .and(PlayerSpecification.dateFilter(after, before))
+        .and(PlayerSpecification.professionFilter(profession))
+        .and(PlayerSpecification.raceFilter(race))
+        .and(PlayerSpecification.experienceFilter(minExperience, maxExperience));
+
+    return playerService.getPlayersCount(spec);
   }
 }
